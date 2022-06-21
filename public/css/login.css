@@ -1,0 +1,241 @@
+.auth-box .helper-text,
+.auth-box .btn-signin-social {
+    display: block;
+}
+
+.displaynone {
+    display: none;
+}
+
+.overflowhidden,
+.member-card {
+    overflow: hidden;
+}
+
+html.fullscreen-bg,
+html.fullscreen-bg body,
+html.fullscreen-bg #wrapper {
+    height: 100%;
+}
+
+.vertical-align-wrap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: table;
+}
+
+.vertical-align-middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.card {
+    background: #ffffff;
+    transition: 0.5s;
+    border: 0;
+    margin-bottom: 30px;
+    border-radius: 0.55rem;
+    position: relative;
+    width: 100%;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.card .header {
+    color: #444444;
+    padding: 20px;
+    position: relative;
+    box-shadow: none;
+}
+
+.card .header h2 {
+    font-size: 16px;
+    color: #444444;
+    position: relative;
+}
+
+.card .header h2 small {
+    font-size: 13px;
+    color: #999999;
+    line-height: 15px;
+}
+
+.card .header h2 small a {
+    font-weight: 700;
+    color: #777777;
+}
+.card .header p {
+    font-weight: 700;
+    color: #555555;
+}
+
+.card .p-15 {
+    padding: 35px !important;
+}
+
+.card .body {
+    color: #444444;
+    padding: 20px;
+    font-weight: 400;
+}
+
+/* Authentication forms */
+body:after,
+body:before,
+div#wrapper:after,
+div#wrapper:before {
+    background-color: #49c5b6;
+}
+
+.auth-main::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 400px;
+    height: 100%;
+    z-index: -1;
+    background: #191f28;
+}
+
+@media screen and (max-width: 640px) {
+    .auth-main::before {
+        width: 100%;
+    }
+}
+
+.auth-main:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: url("../img/auth_bg.jpg") no-repeat top left fixed;
+}
+
+.auth-main .card {
+    padding: 10px;
+}
+
+.auth-box {
+    width: 380px;
+    height: auto;
+    margin-left: 130px;
+}
+
+.auth-box .top img {
+    width: 130px;
+}
+
+.auth-box .form-auth-small .element-left {
+    float: left;
+}
+
+.auth-box .form-auth-small .element-right {
+    float: right;
+}
+
+.auth-box .lead {
+    font-size: 18px;
+}
+
+.auth-box .helper-text {
+    color: #9a9a9a;
+}
+
+.auth-box .btn-signin-social {
+    padding: 10px 22px;
+    width: 100%;
+    background-color: #ffffff;
+    border-color: #f0f0f0;
+}
+
+.auth-box .btn-signin-social:hover,
+.auth-box .btn-signin-social:focus {
+    background-color: #f0f0f0;
+}
+
+.auth-box .btn-signin-social i {
+    font-size: 16px;
+    margin: 5px;
+}
+
+@media screen and (max-width: 992px) {
+    .auth-box {
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .auth-box {
+        width: 90%;
+    }
+}
+
+.btn {
+    font-size: 14px;
+}
+
+.auth-box .lead {
+    margin-bottom: 0px;
+}
+
+.auth-box .lead {
+    margin-top: 20px;
+}
+
+.auth-box .btn-signin-social {
+    margin-bottom: 20px;
+}
+
+.auth-box .form-auth-small .btn,
+.auth-box .form-auth-small .bottom {
+    margin-top: 20px;
+}
+
+.auth-box .top {
+    margin-bottom: 30px;
+}
+
+.auth-box .form-auth-small .bottom {
+    text-align: center;
+}
+
+.circle {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 2px solid;
+    border-radius: 50%;
+}
+.social-link {
+    margin: 0 !important;
+}
+.social-link:hover {
+    text-decoration: none;
+}
+/* Separation line with text */
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 15px 0;
+}
+
+.separator::before,
+.separator::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #ced4da;
+}
+
+.separator:not(:empty)::before {
+    margin-right: 0.25em;
+}
+
+.separator:not(:empty)::after {
+    margin-left: 0.25em;
+}

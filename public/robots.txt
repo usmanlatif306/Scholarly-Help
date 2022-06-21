@@ -1,0 +1,24 @@
+User-agent: *
+Disallow:/additional/
+Disallow:/services/
+Disallow:/writer/
+Disallow:/cart/
+Disallow:/marketing/
+Disallow:/attachments/
+Disallow:/tasks/
+Disallow:/task/
+Disallow:/dashboard/
+Disallow:/admin/
+Disallow:/writer/
+Disallow:/checkout/
+Disallow:/my-account/
+Disallow:/orders/
+Disallow:/notifications/
+Disallow:/install/
+Disallow:/paypal/
+Disallow:/stripe/
+Disallow:/braintree/
+Disallow:/paystack/
+Disallow:/two_checkout/
+Disallow:/payu/
+Disallow:/payment/

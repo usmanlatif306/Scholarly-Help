@@ -21,6 +21,7 @@ class FlutterwaveController extends Controller
      */
     public function initialize()
     {
+        return request()->all();
         //This generates a payment reference
         $reference = Flutterwave::generateReference();
 
@@ -61,32 +62,28 @@ class FlutterwaveController extends Controller
      */
     public function callback()
     {
-        
+
         $status = request()->status;
 
         //if payment is successful
         if ($status ==  'successful') {
-        
-        $transactionID = Flutterwave::getTransactionIDFromCallback();
-        $data = Flutterwave::verifyTransaction($transactionID);
 
-        // // if payment is for order then redirect to order payment success method
-        // if ($this->cart->getCartType() == CartType::NewOrder) {
-            
-        // }else{
-        //     // if payment is for wallet then redirect to wallet payment success method
-        //     return redirect()->route('handle_succesfull_online_payment'); 
-        // }
-        return redirect()->route('handle_succesfull_online_payment');
-        
+            $transactionID = Flutterwave::getTransactionIDFromCallback();
+            $data = Flutterwave::verifyTransaction($transactionID);
 
-        }
-        elseif ($status ==  'cancelled'){
+            // // if payment is for order then redirect to order payment success method
+            // if ($this->cart->getCartType() == CartType::NewOrder) {
+
+            // }else{
+            //     // if payment is for wallet then redirect to wallet payment success method
+            //     return redirect()->route('handle_succesfull_online_payment'); 
+            // }
+            return redirect()->route('handle_succesfull_online_payment');
+        } elseif ($status ==  'cancelled') {
             //Put desired action/code after transaction has been cancelled here
             return redirect()->route('choose_payment_method')
                 ->withError('Your payment has been cancelled.');
-        }
-        else{
+        } else {
             return redirect()->route('choose_payment_method')
                 ->withError('Your payment has been failed. Please try again!');
             //Put desired action/code after transaction has failed here

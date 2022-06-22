@@ -46,7 +46,7 @@
                </div>
                <hr />
                <!-- stripe payment  -->
-               <form id='payment-form' style="display: none;">
+               <!-- <form id='payment-form' style="display: none;">
                   <div class="mb-3">
                      <label for="card-element">Credit or debit card</label>
                      <div id="card-element"></div>
@@ -55,11 +55,11 @@
                   <button type="submit" class="btn btn-success btn-lg btn-block confirm-button" disabled><i
                         class="fas fa-shopping-cart"></i> Confirm Payment</button>
                </form>
-                <div class="text-center" id="loading">Please wait ...</div>
+                <div class="text-center" id="loading">Please wait ...</div> -->
                <!-- stripe payment end -->
 
                <!-- flutter payment -->
-               <!-- <form method="POST" action="{{ route('flutter.pay') }}" id="paymentForm">
+               <form method="POST" action="{{ route('flutter.pay') }}" id="paymentForm">
                   <label for="card-element">Flutter Payment</label>
                   @csrf
                   <input type="hidden" name="name" value="{{auth()->user()->first_name}} {{auth()->user()->last_name}}" />
@@ -67,8 +67,9 @@
                   <input type="hidden" name="phone" />
                   <input type="hidden" id="flutterAmount" name="amount" value="{{$data['total']}}" />
 
-                  <button type="submit" class="btn btn-success btn-lg btn-block confirm-button"><i class="fas fa-shopping-cart"></i>Payment With Flutterwave</button>
-               </form> -->
+                  <!-- <button type="submit" class="btn btn-success btn-lg btn-block confirm-button" ><i class="fas fa-shopping-cart"></i>Payment With Flutterwave</button> -->
+                  <button type="button" class="btn btn-success btn-lg btn-block confirm-button" onclick="makePayment()"><i class="fas fa-shopping-cart"></i>Payment With Flutterwave</button>
+               </form>
                <!-- flutter payment end -->
 
                @if(isset($data['payment_options']['offline']))
@@ -119,7 +120,50 @@
 @push('scripts')
 
 <script src="https://js.stripe.com/v3/"></script>
+<script src="https://checkout.flutterwave.com/v3.js"></script>
 <script>
+   function makePayment() {
+      let token = $('input[name="_token"]').val();
+      let name = $('input[name="name"]').val();
+      let email = $('input[name="email"]').val();
+      let phone = $('input[name="phone"]').val();
+      let amount = $('input[name="amount"]').val();
+
+      const model = FlutterwaveCheckout({
+         public_key: "{{env('FLW_PUBLIC_KEY')}}",
+         tx_ref: token,
+         amount: "35.45",
+         currency: "USD",
+         payment_options: "card",
+         redirect_url: "{{route('flutter.callback')}}",
+         customer: {
+            email: email,
+            phone_number: phone,
+            name: name,
+         },
+         customizations: {
+            title: "Scholarly Help",
+            description: "Payment for Scholarly Help",
+            logo: "https://scholarlyhelp.com/storage/uploads/scholarlyhelp-logo-web-White.svg",
+         },
+         onclose: function(incomplete) {
+            if (incomplete === true) {
+               // Record event in analytics
+               model.close();
+            }
+         }
+      });
+   }
+   // $(function() {
+   //    $('#paymentForm').on('submit', function(e) {
+   //       e.preventDefault();
+   //       let data = $(this).serialize();
+   //       $.post("{{ route('flutter.pay') }}", data,
+   //          function(data, status) {
+   //             console.log(data);
+   //          });
+   //    });
+   // });
    $('.confirm-button').on('click', function() {
       gtag_report_conversion();
    });

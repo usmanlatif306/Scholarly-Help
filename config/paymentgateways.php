@@ -16,44 +16,48 @@ return [
     'gateways' => [
         'paypal_checkout' => [
             'name' => 'Paypal Smart Checkout',
-            'route' => 'paypal_checkout',       
-
+            'route' => 'paypal_checkout',
         ],
         'stripe' => [
             'name' => 'Stripe',
-            'route' => 'stripe',          
+            'route' => 'stripe',
+        ],
+        'flutterwave' => [
+            'name' => 'Flutterwave',
+            'route' => 'payu',
         ],
         'braintree' => [
             'name' => 'Braintree',
-            'route' => 'braintree',      
+            'route' => 'braintree',
             // 'options' => [],
-            
+
         ],
         'paystack' => [
             'name' => 'Paystack',
-            'route' => 'paystack',                    
+            'route' => 'paystack',
         ],
         'payu' => [
             'name' => 'PayU',
-            'route' => 'payu',                    
+            'route' => 'payu',
         ],
-        
+
+
         // 'two_checkout' => [
         //     'name' => '2Checkout',
         //     'route' => 'two_checkout',                  
         // ],
 
     ],
-    
+
     'default_gateway' => 'paypal_checkout',
     'module_folder_root' => app_path('PaymentGateways'),
-    'settings_view' => 'views'. DIRECTORY_SEPARATOR . 'setup',
+    'settings_view' => 'views' . DIRECTORY_SEPARATOR . 'setup',
     'generic_options'   => [
         'env_list' => [
-             'sandbox' => 'Sandbox',
-             'production' => 'Production'
-         ]
-     ]
+            'sandbox' => 'Sandbox',
+            'production' => 'Production'
+        ]
+    ]
 
 
 ];

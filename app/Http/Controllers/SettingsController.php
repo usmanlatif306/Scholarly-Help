@@ -337,7 +337,6 @@ class SettingsController extends Controller
             abort(404);
         }
         $data = $settingSerice->recordsForSettingsPage($request->gateway, $config);
-
         return view('setup.payment.gateway', compact('data'));
     }
 

@@ -44,6 +44,9 @@ Route::namespace('\App\PaymentGateways')->group(function () {
 	Route::patch('stripe/configure', 'stripe\StripeSettingsController@updateSettings')
 		->name('patch_settings_stripe');
 
+	Route::patch('flutterwave/configure', 'flutterwave\FlutterwaveSettingController@updateSettings')
+		->name('patch_settings_flutterwave');
+
 	Route::patch('braintree/configure', 'braintree\BraintreeSettingsController@updateSettings')
 		->name('patch_settings_braintree');
 

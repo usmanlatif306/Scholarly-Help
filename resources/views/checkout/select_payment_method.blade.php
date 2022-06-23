@@ -45,46 +45,6 @@
                   </div>
                </div>
                <hr />
-               <!-- stripe payment  -->
-               <!-- <form id='payment-form' style="display: none;">
-                  <div class="mb-3">
-                     <label for="card-element">Credit or debit card</label>
-                     <div id="card-element"></div>
-                     <div id="card-errors" class="invalid-feedback d-block"></div>
-                  </div>
-                  <button type="submit" class="btn btn-success btn-lg btn-block confirm-button" disabled><i
-                        class="fas fa-shopping-cart"></i> Confirm Payment</button>
-               </form>
-                <div class="text-center" id="loading">Please wait ...</div> -->
-               <!-- stripe payment end -->
-
-               <!-- flutter payment -->
-               <form method="POST" action="{{ route('flutter.pay') }}" id="paymentForm">
-                  <label for="card-element">Flutter Payment</label>
-                  @csrf
-                  <input type="hidden" name="name" value="{{auth()->user()->first_name}} {{auth()->user()->last_name}}" />
-                  <input type="hidden" name="email" value="{{auth()->user()->email}}" />
-                  <input type="hidden" name="phone" />
-                  <input type="hidden" id="flutterAmount" name="amount" value="{{$data['total']}}" />
-
-                  <!-- <button type="submit" class="btn btn-success btn-lg btn-block confirm-button" ><i class="fas fa-shopping-cart"></i>Payment With Flutterwave</button> -->
-                  <button type="button" class="btn btn-success btn-lg btn-block confirm-button" onclick="makePayment()"><i class="fas fa-shopping-cart"></i>Payment With Flutterwave</button>
-               </form>
-               <!-- flutter payment end -->
-
-               @if(isset($data['payment_options']['offline']))
-               <br>
-               <p class="text-muted">Offline</p>
-               <div class="list-group">
-                  @foreach($data['payment_options']['offline'] as $option)
-                  <a href="{{ route('pay_with_offline_method', $option->slug) }}" class="list-group-item list-group-item-action">
-                     <div>{{ $option->name }}</div>
-                     <small class="text-muted">{{ $option->description }}</small>
-                  </a>
-                  @endforeach
-               </div>
-               @endif
-               <hr />
                <!-- promo code  -->
                <form id='promo-form' action="{{route('apply_promo_code_payment')}}" method="POST" class="mt-3">
                   <div class="mb-3">
@@ -99,6 +59,50 @@
                   </div>
                </form>
                <!-- promo code end -->
+               <hr />
+               @foreach($data['payment_options']['online'] as $option)
+               <!-- stripe payment  -->
+               @if($option->unique_name === 'stripe')
+               <form id='payment-form' class="mb-4" style="display: none;">
+                  <div class="mb-3">
+                     <label for="card-element">Credit or debit card</label>
+                     <div id="card-element"></div>
+                     <div id="card-errors" class="invalid-feedback d-block"></div>
+                  </div>
+                  <button type="submit" class="btn btn-success btn-lg btn-block confirm-button" disabled><i class="fas fa-shopping-cart"></i> Confirm Payment</button>
+               </form>
+               <div class="text-center" id="loading">Please wait ...</div>
+               @endif
+               <!-- stripe payment end -->
+
+               <!-- flutter payment -->
+               @if($option->unique_name === 'flutterwave')
+               <form method="POST" action="{{ route('flutter.pay') }}" id="paymentForm">
+                  <label for="card-element">{{$option->name}}</label>
+                  @csrf
+                  <input type="hidden" name="name" value="{{auth()->user()->first_name}} {{auth()->user()->last_name}}" />
+                  <input type="hidden" name="email" value="{{auth()->user()->email}}" />
+                  <input type="hidden" name="phone" />
+                  <input type="hidden" id="flutterAmount" name="amount" value="{{$data['total']}}" />
+                  <button type="button" class="btn btn-success btn-lg btn-block confirm-button" onclick="makePayment()"><i class="fas fa-shopping-cart"></i> Confirm Payment</button>
+               </form>
+               @endif
+               <!-- flutter payment end -->
+               @endforeach
+
+               @if(isset($data['payment_options']['offline']))
+               <br>
+               <p class="text-muted">Offline</p>
+               <div class="list-group">
+                  @foreach($data['payment_options']['offline'] as $option)
+                  <a href="{{ route('pay_with_offline_method', $option->slug) }}" class="list-group-item list-group-item-action">
+                     <div>{{ $option->name }}</div>
+                     <small class="text-muted">{{ $option->description }}</small>
+                  </a>
+                  @endforeach
+               </div>
+               @endif
+               <hr />
                @if($data['show_wallet_option'])
                <p class="text-muted">Wallet- Balance: {{ format_money(auth()->user()->wallet()->balance()) }}</p>
                <div class="list-group">
@@ -132,7 +136,7 @@
       const model = FlutterwaveCheckout({
          public_key: "{{env('FLW_PUBLIC_KEY')}}",
          tx_ref: token,
-         amount: "35.45",
+         amount: amount,
          currency: "USD",
          payment_options: "card",
          redirect_url: "{{route('flutter.callback')}}",

@@ -13,3 +13,6 @@ Route::post('order/create', 'Api\CartController@storeOrder');
 Route::post('order/status', 'Api\CartController@changeOrderStatus');
 Route::post('order/rating', 'Api\CartController@orderRating');
 Route::post('order/comment', 'Api\CartController@comments');
+
+// create message
+Route::post('message/create', 'Api\MessageController@storeMessage');

@@ -64,7 +64,6 @@ class SitemapController extends Controller
             $homepage_last_updated_at = Carbon::createFromDate($homepage_last_updated_at);
         }
 
-
         $data['routes'] = [
             'homepage' => [
                 'route' => '',

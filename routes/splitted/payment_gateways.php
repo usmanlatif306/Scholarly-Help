@@ -6,13 +6,13 @@ Route::namespace('\App\PaymentGateways')->group(function () {
     // Paypal Checkout
     Route::prefix('paypal/checkout')->group(function () {
 
-        Route::get('/', 'paypal_express\PaypalCheckoutController@index')
+        Route::get('/', 'paypal_checkout\PaypalCheckoutController@index')
             ->name('paypal_checkout');
 
-        Route::post('process', 'paypal_express\PaypalCheckoutController@capturePayment')
+        Route::post('process', 'paypal_checkout\PaypalCheckoutController@capturePayment')
             ->name('paypal_checkout_process');
 
-        Route::post('generate/token', 'paypal_express\PaypalCheckoutController@generateToken')
+        Route::post('generate/token', 'paypal_checkout\PaypalCheckoutController@generateToken')
             ->name('paypal_checkout_generate_token');
     });
 

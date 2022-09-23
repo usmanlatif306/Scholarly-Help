@@ -50,7 +50,7 @@ Route::namespace('\App\PaymentGateways')->group(function () {
 	Route::patch('braintree/configure', 'braintree\BraintreeSettingsController@updateSettings')
 		->name('patch_settings_braintree');
 
-	Route::patch('paypal/checkout/configure', 'paypal_express\PaypalCheckoutSettingsController@updateSettings')
+	Route::patch('paypal/checkout/configure', 'paypal_checkout\PaypalCheckoutSettingsController@updateSettings')
 		->name('patch_settings_paypal_checkout');
 
 	Route::patch('paystack/configure', 'paystack\PaystackSettingsController@updateSettings')
@@ -63,3 +63,6 @@ Route::namespace('\App\PaymentGateways')->group(function () {
 	Route::patch('payu/configure', 'payu\PayUSettingsController@updateSettings')
 		->name('patch_settings_payu');
 });
+
+// Route::patch('paypal/checkout/configure', 'Payments\PaypalCheckoutSettingsController@updateSettings')
+// 	->name('patch_settings_paypal_checkout');

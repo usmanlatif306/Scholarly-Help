@@ -15,6 +15,8 @@ class AddSubjectToOrdersTable extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             $table->string('subject')->nullable();
+            $table->string('api_user_id')->nullable();
+            $table->string('api_order_id')->nullable();
         });
     }
 

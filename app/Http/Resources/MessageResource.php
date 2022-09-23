@@ -20,7 +20,7 @@ class MessageResource extends JsonResource
             'user_id' => $this->user_id,
             'receiver_id' => $this->receiver_id,
             'type' => $this->type,
-            'message' => $this->type === 'text' ? $this->message : url('/') . '/storage/' . $this->message,
+            'message' => $this->type === 'text' ? $this->message : ($this->message_type === 'self' ? url('/') . '/storage/' . $this->message : env('API_MAIN_URL') . 'storage/' . $this->message),
             'file_name' => $this->file_name,
             'created_at' => $this->created_at->toDateTimeString(),
             'status' => $this->status,

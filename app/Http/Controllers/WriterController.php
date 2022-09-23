@@ -6,6 +6,7 @@ use App\Enums\CartType;
 use App\Events\TaskAssignedEvent;
 use App\Message;
 use App\Order;
+use App\Services\ApiMessageService;
 use App\Services\CartService;
 use App\User;
 use Illuminate\Http\Request;
@@ -141,7 +142,7 @@ class WriterController extends Controller
                     'user_id' => $message->user_id,
                     'receiver_id' => $message->receiver_id,
                     'type' => $message->type,
-                    'message' => $message->type === 'text' ? $message->message : url('/') . '/storage/' . $message->message,
+                    'message' => $message->type === 'text' ? $message->message : ($message->message_type === 'self' ? url('/') . '/storage/' . $message->message : env('API_MAIN_URL') . 'storage/' . $message->message),
                     'file_name' => $message->file_name,
                     'created_at' => $message->created_at->format('H:m:s'),
                     'status' => $message->status,
@@ -181,9 +182,9 @@ class WriterController extends Controller
             }
         }
 
-        // return response([
-        //     'type' => $type
-        // ]);
+        // user last api message 
+        $last_message = Message::where('user_id', $request->receiverId)->where('receiver_id', $user->id)->where('message_type', 'api')->latest()->first();
+
         $message = $user->messages()->create([
             'receiver_id' => $request->receiverId,
             'type' => $type,
@@ -191,6 +192,11 @@ class WriterController extends Controller
             'file_name' => $file_name,
             'status' => false,
         ]);
+
+        // if user has last message then it should be send through api as well
+        if ($last_message) {
+            (new ApiMessageService())->sendMessage($message, $last_message);
+        }
         return $message;
     }
 
